@@ -1,4 +1,8 @@
 import requests
+import time
+from tinydb import TinyDB
+from datetime import datetime
+
 
 def extract_dados_bitcoin():
 
@@ -12,17 +16,30 @@ def transform_dados_bitcoin(dados):
     valor = dados["data"]["amount"]
     criptomoeda = dados["data"]["base"] 
     moeda = dados["data"]["currency"]
+    timestamp = datetime.now().timestamp()
 
     dados_transformados = {
         "valor" : valor,
         "criptomoeda" : criptomoeda,
-        "moeda" : moeda
+        "moeda" : moeda,
+        "timestamp":timestamp
+    
     }
 
     return dados_transformados
 
-if __name__ == "_main_":
-    # Extração dos Dados 
+    #utilizando  o NOsql
+def salvar_dados_tinydb(dados, db_name="bitcoin.json"):
+    db = TinyDB(db_name)
+    db.insert(dados)
+    print("Dados Salvos com Sucesso !")
+
+
+if __name__ == "__main__":
+     # Extração dos Dados 
+ 
+ while True:
     dados_json = extract_dados_bitcoin()
     dados_tratados = transform_dados_bitcoin(dados_json)
-    print(dados_tratados)
+    salvar_dados_tinydb(dados_tratados)
+    time.sleep(20)
