@@ -12,7 +12,6 @@ def extract_dados_bitcoin():
     return dados
 
 def transform_dados_bitcoin(dados):
-
     valor = dados["data"]["amount"]
     criptomoeda = dados["data"]["base"] 
     moeda = dados["data"]["currency"]
@@ -23,7 +22,6 @@ def transform_dados_bitcoin(dados):
         "criptomoeda" : criptomoeda,
         "moeda" : moeda,
         "timestamp":timestamp
-    
     }
 
     return dados_transformados
